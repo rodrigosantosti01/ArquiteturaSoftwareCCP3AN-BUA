@@ -83,7 +83,7 @@
             <div id="actions" class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary" name="acao" value="editar">Editar</button>
-                    <a href="index" class="btn btn-default">Cancelar</a>
+                    <a href="/pipoca_spring_aula03/visualizar_filme/${filme.id}" class="btn btn-default">Cancelar</a>
                 </div>
             </div>
         </form>
