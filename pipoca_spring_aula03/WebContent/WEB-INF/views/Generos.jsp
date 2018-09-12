@@ -26,12 +26,8 @@
                      <!-- Carousel items -->
                      
                         <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
-                            <div class="carousel-inner onebyone-carosel">
-                            
-                            
-                            
+                           <div class="carousel-inner onebyone-carosel size_carosel">
                             <c:forEach var="filmes" items="${genero.filmes}" varStatus="loop">
-                            	
                             	<c:choose>
 								<c:when test="${loop.index == 0}">
 									<div class="item active">
@@ -41,12 +37,14 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filmes.titulo}</div>
+                                        
+                                        <a href="visualizar_filme/${filmes.id}">
+                                        <img src="${filmes.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filmes.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
-                            
                             </div>
                             <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
                             <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>

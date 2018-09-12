@@ -37,8 +37,9 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filme.titulo}</div>
+                                        <a href="visualizar_filme/${filme.id}"><img src="${filme.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filme.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
@@ -74,8 +75,9 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filme.titulo}</div>
+                                        <a href="visualizar_filme/${filme.id}"><img src="${filme.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filme.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
@@ -111,8 +113,9 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filme.titulo}</div>
+                                        <a href="visualizar_filme/${filme.id}"><img src="${filme.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filme.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
@@ -147,8 +150,9 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filme.titulo}</div>
+                                        <a href="visualizar_filme/${filme.id}"><img src="${filme.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filme.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
@@ -183,8 +187,9 @@
 								</c:otherwise>
 							</c:choose> 	
                                     <div class="col-md-4">
-                                        <a href="#"><img src="http://placehold.it/250x250" class="img-responsive center-block"></a>
-                                        <div class="text-center">${filme.titulo}</div>
+                                        <a href="visualizar_filme/${filme.id}"><img src="${filme.posterPath}" class="size-img img-responsive center-block"></a>
+                                        <br/>
+                                        <div class="text-center"><strong>${filme.titulo}</strong></div>
                                     </div>
                                 </div>
                             </c:forEach>     
