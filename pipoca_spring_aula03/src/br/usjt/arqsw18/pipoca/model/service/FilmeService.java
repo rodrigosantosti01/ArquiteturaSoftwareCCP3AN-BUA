@@ -22,7 +22,7 @@ public class FilmeService {
 	public FilmeService(FilmeDAO fdao) {
 		dao = fdao;
 	}
-	
+	@Transactional
 	public Filme buscarFilme(int id) throws IOException{
 		return dao.buscarFilme(id);
 	}
@@ -33,7 +33,8 @@ public class FilmeService {
 		filme.setId(id);
 		return filme;
 	}
-
+	
+	@Transactional
 	public List<Filme> listarFilmes(String chave) throws IOException{
 		return dao.listarFilmes(chave);
 	}
@@ -43,8 +44,8 @@ public class FilmeService {
 	}
 	
 	@Transactional
-	public void updateFilme(Filme filme) throws IOException {
-		dao.updateFilme(filme);
+	public Filme updateFilme(Filme filme) throws IOException {
+		return dao.updateFilme(filme);
 	}
 	
 	@Transactional

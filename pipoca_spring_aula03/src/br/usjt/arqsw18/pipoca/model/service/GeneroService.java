@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.usjt.arqsw18.pipoca.model.dao.GeneroDAO;
+import br.usjt.arqsw18.pipoca.model.entity.Filme;
 import br.usjt.arqsw18.pipoca.model.entity.Genero;
 
 
@@ -25,14 +26,18 @@ public class GeneroService {
 		return dao.listarGeneros();
 	}
 	
-	public List<Genero> listaGenFilmes() throws IOException{
+	public ArrayList<Genero> listaGenFilmes() throws IOException{
 		
-		List <Genero> generos = dao.listarGeneros();
+		ArrayList <Genero> generos = new ArrayList<Genero> (dao.listarGeneros());
 		System.out.println(generos);
 		
 		for(int i = 0; i<generos.size();i++ ) {
-		
-			generos.get(i).setFilmes(dao.listarFilmes(generos.get(i))); 
+			List<Filme> filmes = new ArrayList<Filme>();
+			
+			
+			filmes = dao.listarFilmes(generos.get(i));
+			generos.get(i).setFilmes(new ArrayList(filmes));
+
 		}
 		
 		return generos;

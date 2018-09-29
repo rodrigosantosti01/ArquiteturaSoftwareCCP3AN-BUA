@@ -132,7 +132,7 @@ public class ManterFilmesController {
 	
 	@RequestMapping("/generos")
 	public String porGeneros(Model model) throws IOException {
-		List <Genero> porGeneros = gService.listaGenFilmes();
+		ArrayList <Genero> porGeneros = gService.listaGenFilmes();
 		model.addAttribute("porGeneros",porGeneros);
 		return "Generos";
 	}
@@ -156,9 +156,9 @@ public class ManterFilmesController {
 	public String porDtLancamento(Model model) throws IOException {
 		
 		List<Filme> filmesAno = fService.porData("ano",1);
-		
 		List<Filme> filmesPenultimo = fService.porData("ano",2);
 		List<Filme> filmesMes = fService.porData("mes",1);
+		
 		model.addAttribute("filmesAno",filmesAno);
 		model.addAttribute("filmesMes",filmesMes);
 		model.addAttribute("filmesPenultimo",filmesPenultimo);

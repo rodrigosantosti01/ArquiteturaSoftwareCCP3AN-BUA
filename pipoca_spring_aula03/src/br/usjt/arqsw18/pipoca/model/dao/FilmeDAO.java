@@ -31,8 +31,8 @@ public class FilmeDAO {
 		return manager.find(Filme.class, id);
 	}
 	
-	public void updateFilme(Filme filme) throws IOException{
-		manager.merge(filme);
+	public Filme updateFilme(Filme filme) throws IOException{
+		return manager.merge(filme);
 	}
 	
 	public void excluirFilme(Integer id) throws IOException{

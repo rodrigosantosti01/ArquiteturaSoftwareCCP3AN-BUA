@@ -40,7 +40,7 @@
 	</bean>
 	<tx:annotation-driven />
 	
-	<mvc:interceptors>
+	 <mvc:interceptors>
 		<bean class="br.usjt.arqsw18.pipoca.AuthorizationInterceptor" />
-	</mvc:interceptors> 
+	</mvc:interceptors>
 </beans>

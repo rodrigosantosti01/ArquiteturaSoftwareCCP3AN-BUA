@@ -17,13 +17,14 @@ public class UsuarioDAO {
 	EntityManager manager;
 	
 	public Usuario logar(Usuario usuario) throws IOException {
-		String jpql = "select u from Usuario u where u.email = :email and u.senha= :senha";
-		
+		String jpql = "select u from Usuario u where u.email = :email and u.senha=: senha";
+		System.out.println(usuario.getEmail());
 		try{
 			System.out.println("entrou no try");
 			Query query = manager.createQuery(jpql)
+					
 					.setParameter("email",usuario.getEmail())
-					.setParameter("senha",usuario.getSenha());
+					.setParameter("senha",usuario.getEmail());
 			return (Usuario) query.getSingleResult();
 			
 			}catch (NoResultException nre){

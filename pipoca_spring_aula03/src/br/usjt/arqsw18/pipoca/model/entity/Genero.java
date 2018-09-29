@@ -1,5 +1,6 @@
 package br.usjt.arqsw18.pipoca.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,14 +21,15 @@ public class Genero {
 	@NotNull
 	@Size(max=60)
 	private String nome;
-	@Column
-    @ElementCollection(targetClass=Filme.class)
-	private List<Filme> filmes;
 	
-	public List<Filme> getFilmes() {
+//    @ElementCollection(targetClass=Filme.class)
+	private ArrayList<Filme> filmes;
+	
+	
+	public ArrayList<Filme> getFilmes() {
 		return filmes;
 	}
-	public void setFilmes(List<Filme> list) {
+	public void setFilmes(ArrayList<Filme> list) {
 		this.filmes = list;
 	}
 	public int getId() {
