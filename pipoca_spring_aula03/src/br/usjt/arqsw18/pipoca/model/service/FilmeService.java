@@ -2,6 +2,10 @@ package br.usjt.arqsw18.pipoca.model.service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -23,33 +27,38 @@ public class FilmeService {
 		return dao.buscarFilme(id);
 	}
 	
+	@Transactional
 	public Filme inserirFilme(Filme filme) throws IOException {
 		int id = dao.inserirFilme(filme);
 		filme.setId(id);
 		return filme;
 	}
 
-	public ArrayList<Filme> listarFilmes(String chave) throws IOException{
+	public List<Filme> listarFilmes(String chave) throws IOException{
 		return dao.listarFilmes(chave);
 	}
-
-	public ArrayList<Filme> listarFilmes() throws IOException{
+	
+	public List<Filme> listarFilmes() throws IOException{
 		return dao.listarFilmes();
 	}
 	
+	@Transactional
 	public void updateFilme(Filme filme) throws IOException {
 		dao.updateFilme(filme);
 	}
 	
+	@Transactional
 	public void excluirFilme(Integer id) throws IOException{
 		dao.excluirFilme(id);
 	}
 	
-	public ArrayList<Filme> listarPopulares(Integer inicio,Integer fim) throws IOException{
+	public List<Filme> listarPopulares(Double inicio,Double fim) throws IOException{
+		
+		
 		return dao.listarPopulares(inicio, fim);
 	}
 	
-	public ArrayList<Filme> porData(String chave,Integer periodo) throws IOException{
+	public List<Filme> porData(String chave,Integer periodo) throws IOException{
 		Date data = new Date();
 		Calendar calendar = Calendar.getInstance();
 		if(chave.equals("ano")) {

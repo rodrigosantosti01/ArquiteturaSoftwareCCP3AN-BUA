@@ -2,6 +2,7 @@ package br.usjt.arqsw18.pipoca.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,14 +23,10 @@ import br.usjt.arqsw18.pipoca.model.service.GeneroService;
 
 @Controller
 public class ManterFilmesController {
+	@Autowired
 	private FilmeService fService;
+	@Autowired
 	private GeneroService gService;
-	
-	@Autowired    // ponto onde sera injetado dependencias
-	public ManterFilmesController(FilmeService fs, GeneroService gs) {
-		fService = fs;
-		gService = gs;
-	}
 
 	@RequestMapping("/home")
 	public String iniciar() {
@@ -39,7 +36,7 @@ public class ManterFilmesController {
 	@RequestMapping("/novo_filme")
 	public String novo(Model model,HttpSession session) {
 		try {
-			ArrayList<Genero> generos = gService.listarGeneros();
+			List<Genero> generos = gService.listarGeneros();
 			session.setAttribute("generos", generos);
 			return "CriarFilme";
 		} catch (IOException e) {
@@ -48,10 +45,33 @@ public class ManterFilmesController {
 			return "Erro";
 		}
 	}
+	@RequestMapping("/criar_filme")
+	public String criarFilme(@Valid Filme filme, BindingResult erros, Model model) {
+		try {
+			if (!erros.hasErrors()) {
+				Genero genero = new Genero();
+				genero.setId(filme.getGenero().getId());
+				genero.setNome(gService.buscarGenero(genero.getId()).getNome());
+				filme.setGenero(genero);
+				filme = fService.inserirFilme(filme);
+				model.addAttribute("filme", filme);
+				return "VisualizarFilme";
+			} else {
+				return "CriarFilme";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			model.addAttribute("erro", e);
+			return "Erro";
+		}
+	}
+
+
+	
 	@RequestMapping("/editar_filme/{id}")
 	public String editarFilme(@PathVariable Integer id,Filme filme,Model model,BindingResult errors) throws IOException {
 			filme = fService.buscarFilme(id);
-			ArrayList<Genero> generos = gService.listarGeneros();
+			List<Genero> generos = gService.listarGeneros();
 			model.addAttribute("filme",filme);
 			model.addAttribute("generos",generos);
 			return "EditarFilme";
@@ -74,29 +94,7 @@ public class ManterFilmesController {
 		return "redirect:/listar_filmes";
 	}
 	
-	@RequestMapping("/criar_filme")
-	public String criarFilme(@Valid Filme filme, BindingResult erros, Model model) {
-		
-		try {
-			if(!erros.hasErrors()) {
-			Genero genero = new Genero();
-			genero.setId(filme.getGenero().getId());
-			genero.setNome(gService.buscarGenero(genero.getId()).getNome());
-			filme.setGenero(genero);
-			filme = fService.inserirFilme(filme);
-			model.addAttribute("filme", filme);
-			return "VisualizarFilme";
-			
-			}else {
-				return "CriarFilme";
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			model.addAttribute("erro", e);
-			return "Erro";
-		}
-	}
-
+	
 	@RequestMapping("/reiniciar_lista")
 	public String reiniciarLista(HttpSession session) {
 		session.setAttribute("lista", null);
@@ -115,9 +113,9 @@ public class ManterFilmesController {
 	@RequestMapping("/listar_filmes")
 	public String listarFilmes(HttpSession session, Model model, String chave) {
 		try {
-			//HttpSession session = ((HttpServletRequest) model).getSession();
+			// HttpSession session = ((HttpServletRequest) model).getSession();
 
-			ArrayList<Filme> lista;
+			List<Filme> lista;
 			if (chave != null && chave.length() > 0) {
 				lista = fService.listarFilmes(chave);
 			} else {
@@ -125,7 +123,6 @@ public class ManterFilmesController {
 			}
 			session.setAttribute("lista", lista);
 			return "ListarFilmes";
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("erro", e);
@@ -135,18 +132,18 @@ public class ManterFilmesController {
 	
 	@RequestMapping("/generos")
 	public String porGeneros(Model model) throws IOException {
-		ArrayList <Genero> porGeneros = gService.listaGenFilmes();
+		List <Genero> porGeneros = gService.listaGenFilmes();
 		model.addAttribute("porGeneros",porGeneros);
 		return "Generos";
 	}
 	
 	@RequestMapping("/popularidade")
 	public String porPopularidade(Model model) throws IOException {
-		ArrayList<Filme> filmes1 = fService.listarPopulares(0,30);
-		ArrayList<Filme> filmes2 = fService.listarPopulares(31,50);
-		ArrayList<Filme> filmes3 = fService.listarPopulares(51,60);
-		ArrayList<Filme> filmes4 = fService.listarPopulares(61,80);
-		ArrayList<Filme> filmes5 = fService.listarPopulares(81,100);
+		List<Filme> filmes1 = fService.listarPopulares(0.0,30.0);
+		List<Filme> filmes2 = fService.listarPopulares(31.0,50.0);
+		List<Filme> filmes3 = fService.listarPopulares(51.0,60.0);
+		List<Filme> filmes4 = fService.listarPopulares(61.0,80.0);
+		List<Filme> filmes5 = fService.listarPopulares(81.0,100.0);
 		model.addAttribute("filmes1",filmes1);
 		model.addAttribute("filmes2",filmes2);
 		model.addAttribute("filmes3",filmes3);
@@ -158,10 +155,10 @@ public class ManterFilmesController {
 	@RequestMapping("/dtLancamentos")
 	public String porDtLancamento(Model model) throws IOException {
 		
-		ArrayList<Filme> filmesAno = fService.porData("ano",1);
+		List<Filme> filmesAno = fService.porData("ano",1);
 		
-		ArrayList<Filme> filmesPenultimo = fService.porData("ano",2);
-		ArrayList<Filme> filmesMes = fService.porData("mes",1);
+		List<Filme> filmesPenultimo = fService.porData("ano",2);
+		List<Filme> filmesMes = fService.porData("mes",1);
 		model.addAttribute("filmesAno",filmesAno);
 		model.addAttribute("filmesMes",filmesMes);
 		model.addAttribute("filmesPenultimo",filmesPenultimo);

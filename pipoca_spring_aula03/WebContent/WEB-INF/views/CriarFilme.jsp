@@ -54,7 +54,7 @@
 
                 <div class="form-group col-md-4">
                     <label for="dataLancamento">Lançamento</label>
-                    <input type="date" class="form-control" name="dataLancamento" id="dataLancamento">
+                    <input type="text" class="form-control" name="dataLancamento" id="dataLancamento">
                 </div>
             </div>
             <div class="row">

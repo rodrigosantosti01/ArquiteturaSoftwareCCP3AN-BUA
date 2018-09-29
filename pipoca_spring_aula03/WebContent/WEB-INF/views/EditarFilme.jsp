@@ -65,7 +65,7 @@
 
                 <div class="form-group col-md-4">
 						<label for="dataLancamento">Lançamento</label> 
-						<input type="date" class="form-control" name="dataLancamento" id="dataLancamento" value="<fmt:formatDate value='${filme.dataLancamento}' pattern='yyyy-MM-dd'/>" 
+						<input type="text" class="form-control" name="dataLancamento" id="dataLancamento" value="<fmt:formatDate value='${filme.dataLancamento}' pattern='yyyy-MM-dd'/>" 
 						/>
                 </div>
             </div>

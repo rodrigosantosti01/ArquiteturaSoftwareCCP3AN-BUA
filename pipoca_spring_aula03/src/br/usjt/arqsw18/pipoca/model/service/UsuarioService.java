@@ -17,6 +17,8 @@ public class UsuarioService {
 	}
 
 	public Usuario logar(Usuario usuario) throws IOException {
+		
+		System.out.print(dao.logar(usuario));
 		return dao.logar(usuario);
 	}
 }

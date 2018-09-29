@@ -1,38 +1,37 @@
 package br.usjt.arqsw18.pipoca.model.dao;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import br.usjt.arqsw18.pipoca.model.entity.Genero;
 import br.usjt.arqsw18.pipoca.model.entity.Usuario;
 
 @Repository
 public class UsuarioDAO {
-
+	@PersistenceContext
+	EntityManager manager;
+	
 	public Usuario logar(Usuario usuario) throws IOException {
-		String sql = "SELECT usuario.id, usuario.email, usuario.password from Usuario where email = ? and password = ?";
-		try(Connection conn = ConnectionFactory.getConnection();
-				PreparedStatement pst = conn.prepareStatement(sql);){
-				pst.setString(1,usuario.getEmail());		
-				pst.setString(2,usuario.getSenha());	
-				try (ResultSet rs = pst.executeQuery();) {
-					if(rs.next()) {
-						usuario.setId(rs.getInt("usuario.id"));
-						usuario.setEmail(rs.getString("usuario.email"));
-						usuario.setSenha(rs.getString("usuario.password"));
-					}else {
-						usuario = null;
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
+		String jpql = "select u from Usuario u where u.email = :email and u.senha= :senha";
+		
+		try{
+			System.out.println("entrou no try");
+			Query query = manager.createQuery(jpql)
+					.setParameter("email",usuario.getEmail())
+					.setParameter("senha",usuario.getSenha());
+			return (Usuario) query.getSingleResult();
+			
+			}catch (NoResultException nre){
+				System.out.println("caiu no catch");
+				System.out.println(nre);
+			return null;
 			}
-		return usuario;
+		
+		
 	}
 }
