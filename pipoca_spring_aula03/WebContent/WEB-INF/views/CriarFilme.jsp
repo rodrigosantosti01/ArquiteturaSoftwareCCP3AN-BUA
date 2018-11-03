@@ -21,7 +21,7 @@
     <div id="main" class="container">
         <h3 class="page-header">Incluir Filme</h3>
         <!-- Formulario para inclusao de clientes -->
-        <form action="criar_filme" method="post">
+        <form action="criar_filme" method="post" enctype="multipart/form-data">
             <!-- area de campos do form -->
             <div class="row">
             		<div class="form-group col-md-4">
@@ -60,7 +60,7 @@
             <div class="row">
             	    <div class="form-group col-md-8">
                     <label for="posterpath">Poster</label>
-                    <input type="text" class="form-control" name="posterPath" id="posterpath" maxlength="200" placeholder="caminho da imagem do poster">
+                    <input type="file" class="form-control" class="file" name="posterPath2" id="posterpath" maxlength="200" placeholder="caminho da imagem do poster">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="popularidade">Popularidade</label>

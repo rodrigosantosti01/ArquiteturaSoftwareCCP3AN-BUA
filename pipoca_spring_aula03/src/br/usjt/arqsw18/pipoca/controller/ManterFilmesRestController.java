@@ -4,13 +4,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.validation.Valid;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.usjt.arqsw18.pipoca.model.entity.Filme;
 import br.usjt.arqsw18.pipoca.model.entity.Genero;
@@ -23,6 +31,9 @@ public class ManterFilmesRestController {
 	private FilmeService fService;
 	@Autowired
 	private GeneroService gService;
+	
+	@Autowired
+	private ServletContext  servletContext;
 	
 	@RequestMapping(method=RequestMethod.GET,value="rest/filmes")
 	public List<Filme> listarFilmes(){
@@ -82,9 +93,11 @@ public class ManterFilmesRestController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST,value="rest/filmes")
-	public ResponseEntity<Filme> criarFilme(@RequestBody Filme filme) {
+	public ResponseEntity<Filme> criarFilme(@RequestBody Filme filme,@RequestParam("posterPath") MultipartFile file) {
+		
 		try {
 			 filme = fService.inserirFilme(filme);
+			 fService.gravarImagem(servletContext, filme, file);
 			 return new ResponseEntity<Filme>(filme,HttpStatus.OK);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -108,9 +121,10 @@ public class ManterFilmesRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT ,value="rest/filmes")
-	public ResponseEntity<Filme> alterarFilme(@RequestBody Filme filme) {
+	public ResponseEntity<Filme> alterarFilme(@RequestBody Filme filme,@RequestParam("posterPath") MultipartFile file) {
 		try {
 			 filme = fService.updateFilme(filme);
+			 fService.gravarImagem(servletContext, filme, file);
 			 return new ResponseEntity<Filme>(filme,HttpStatus.OK);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -130,4 +144,6 @@ public class ManterFilmesRestController {
 			}
 			return null;
 	}
+		
+	
 }

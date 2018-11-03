@@ -33,14 +33,16 @@
 		<property name="username" value="root"></property>
 		<property name="password" value=""></property>
 	</bean>
-	
+	<bean id="multipartResolver"
+    		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+		
 	<!-- gerenciamento de transacao pelo spring -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<tx:annotation-driven />
 	
-	 <mvc:interceptors>
+	<!--  <mvc:interceptors>
 		<bean class="br.usjt.arqsw18.pipoca.AuthorizationInterceptor" />
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>

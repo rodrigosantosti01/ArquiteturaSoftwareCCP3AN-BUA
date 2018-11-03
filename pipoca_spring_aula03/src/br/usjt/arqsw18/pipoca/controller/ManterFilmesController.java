@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,8 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.usjt.arqsw18.pipoca.model.entity.Filme;
 import br.usjt.arqsw18.pipoca.model.entity.Genero;
@@ -27,6 +28,9 @@ public class ManterFilmesController {
 	private FilmeService fService;
 	@Autowired
 	private GeneroService gService;
+	
+	@Autowired
+	private ServletContext  servletContext;
 
 	@RequestMapping("/home")
 	public String iniciar() {
@@ -46,19 +50,17 @@ public class ManterFilmesController {
 		}
 	}
 	@RequestMapping("/criar_filme")
-	public String criarFilme(@Valid Filme filme, BindingResult erros, Model model) {
+	public String criarFilme(Filme filme, BindingResult erros, Model model,
+			@RequestParam("posterPath2") MultipartFile posterPath) {
 		try {
-			if (!erros.hasErrors()) {
 				Genero genero = new Genero();
 				genero.setId(filme.getGenero().getId());
 				genero.setNome(gService.buscarGenero(genero.getId()).getNome());
 				filme.setGenero(genero);
+				fService.gravarImagem(servletContext, filme, posterPath);
 				filme = fService.inserirFilme(filme);
 				model.addAttribute("filme", filme);
 				return "VisualizarFilme";
-			} else {
-				return "CriarFilme";
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("erro", e);
@@ -70,6 +72,7 @@ public class ManterFilmesController {
 	
 	@RequestMapping("/editar_filme/{id}")
 	public String editarFilme(@PathVariable Integer id,Filme filme,Model model,BindingResult errors) throws IOException {
+			
 			filme = fService.buscarFilme(id);
 			List<Genero> generos = gService.listarGeneros();
 			model.addAttribute("filme",filme);
@@ -79,8 +82,11 @@ public class ManterFilmesController {
 	
 	
 	@RequestMapping("/atualizar")
-	public String atualizarFilme(Filme filme,Model model) throws IOException {
+	public String atualizarFilme(Filme filme,Model model,
+			@RequestParam("posterPath") MultipartFile file) throws IOException {
+		
 		fService.updateFilme(filme);
+		fService.gravarImagem(servletContext, filme, file);
 		filme = fService.buscarFilme(filme.getId());
 		System.out.println(filme);
 		model.addAttribute("Filme",filme);
@@ -163,5 +169,18 @@ public class ManterFilmesController {
 		model.addAttribute("filmesMes",filmesMes);
 		model.addAttribute("filmesPenultimo",filmesPenultimo);
 		return "DataLancamento";
+	}
+	
+	@RequestMapping("/carregar_filmes")
+	public String carregarFilmes() {
+		try {
+			fService.carregarFilmes();
+			return "redirect:listar_filmes"; 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "Erro"; 
 	}
 }

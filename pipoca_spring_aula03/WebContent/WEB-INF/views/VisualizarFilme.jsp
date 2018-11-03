@@ -49,7 +49,7 @@
 		<h3 class="page-header">${filme.id} - ${filme.titulo}</h3>
 		<div class="row">
 			<div class="col-md-4">
-				<img alt="?" src="/pipoca_spring_aula03/${filme.posterPath}" class="img-responsive">
+				<img alt="?" src="${filme.posterPath}" class="img-responsive">
 			</div>
 			<div class="col-md-8">
 				<div class="row">

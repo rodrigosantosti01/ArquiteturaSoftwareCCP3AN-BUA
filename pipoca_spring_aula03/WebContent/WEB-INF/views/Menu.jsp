@@ -15,6 +15,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/pipoca_spring_aula03/reiniciar_lista">Filmes</a></li>
+                    <li><a href="/pipoca_spring_aula03/carregar_filmes">Carregar do TMDb</a></li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catálogo</a>
                     		<ul class="dropdown-menu">

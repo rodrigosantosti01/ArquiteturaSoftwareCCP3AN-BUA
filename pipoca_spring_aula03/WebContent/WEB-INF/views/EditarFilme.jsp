@@ -22,7 +22,7 @@
         <h3 class="page-header">Editar Filme <%-- ${filme.id} --%></h3>
         
         <!-- Formulario para inclusao de clientes -->
-        <form action="/pipoca_spring_aula03/atualizar" method="post">
+        <form action="/pipoca_spring_aula03/atualizar" method="post" enctype="multipart/form-data">
         		<input value="${filme.id}" type="hidden" name="id"/> 
             <!-- area de campos do form -->
             <div class="row">
@@ -72,7 +72,7 @@
             <div class="row">
             	    <div class="form-group col-md-8">
                     <label for="posterpath">Poster</label>
-                    <input type="text" value="${filme.posterPath}"  class="form-control" name="posterPath" id="posterpath" maxlength="200" placeholder="caminho da imagem do poster">
+                    <input type="file" value="${filme.posterPath}"  class="form-control" name="posterPath" id="posterpath" maxlength="200" placeholder="caminho da imagem do poster">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="popularidade">Popularidade</label>
